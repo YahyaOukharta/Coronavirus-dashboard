@@ -10,11 +10,22 @@ app.use('/',express.static(__dirname + '/frontend'));
 //     res.send("Hello");
 // });
 
-app.get('/api/regions',function(req,res){
+function update_data(){
+    console.log("Retrieving data");
+    var link_regions = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/regions.csv';
+    var path_regions = './regions.csv';
+    shell.exec('bash ./update_data.sh '+ link_regions + " " + path_regions);
+    var link_cities = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/cities.csv';
+    var path_cities = './cities.csv';
+    shell.exec('bash ./update_data.sh '+ link_cities + ' ' + path_cities);
+    var link_time = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/MA-times_series.csv';
+    var path_time = './time.csv';
+    shell.exec('bash ./update_data.sh '+ link_time + ' ' + path_time);
+}
 
-    var link = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/regions.csv';
+app.get('/api/regions',function(req,res)
+{
     var path = './regions.csv';
-    shell.exec('./update_data.sh '+ link + " " + path);
     csv()
     .fromFile(path)
     .then(function(result){
@@ -23,10 +34,7 @@ app.get('/api/regions',function(req,res){
 });
 
 app.get('/api/cities',function(req,res){
-
-    var link = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/cities.csv';
     var path = './cities.csv';
-    shell.exec('./update_data.sh '+ link + ' ' + path);
     csv()
     .fromFile(path)
     .then(function(result){
@@ -35,10 +43,7 @@ app.get('/api/cities',function(req,res){
 });
 
 app.get('/api/time',function(req,res){
-
-    var link = 'https://raw.githubusercontent.com/aboullaite/Covid19-MA/master/stats/MA-times_series.csv';
     var path = './time.csv';
-    shell.exec('./update_data.sh '+ link + ' ' + path);
     csv()
     .fromFile(path)
     .then(function(result){
@@ -47,5 +52,7 @@ app.get('/api/time',function(req,res){
 });
 
 app.listen(3000,function(){
+    update_data();
+    setInterval(update_data, 1000 * 30);
     console.log('Listening on port 3000');
 })

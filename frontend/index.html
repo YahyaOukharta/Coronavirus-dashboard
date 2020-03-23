@@ -5,6 +5,7 @@
     <title>Coronavirus statistics in Morocco</title>
     <script src="Chart.min.js"></script>
     <script src="jquery.min.js"></script>
+    <script src="moment.js"></script>
 </head>
 <body>
     <div id='time_graph'>
@@ -21,120 +22,89 @@
             let recoveries = []; //for datapoints // y axis
             let deaths = []; //for datapoints // y axis
             
-            jsondata.forEach(line => {
+
+            for(var i = 0; i < jsondata.length; i++)
+            {
                 //fill 'dates' array with all dates
-                dates.push(line["Dates / التواريخ"])
+                var line = jsondata[i];
+                date = line["Dates / التواريخ"];
 
-                //fill 'active_cases' array with objects {x:date,y:number of active cases}
-                active_cases.push(
-                    {
-                        x: line["Dates / التواريخ"],
-                        y: line["Cases / الحالات"]
-                    });
+                var date = moment(line["Dates / التواريخ"], "DD/MM/YYYY"); //parse date using momentjs
+                //get diff between two dates entries , missing days are diff - 1
+                var diff = (i != jsondata.length - 1 ? Math.abs(date.diff(moment(jsondata[i + 1]["Dates / التواريخ"], "DD/MM/YYYY"), 'days')) : 1);
 
-                //fill 'deaths' array with objects {x:date,y:number of deaths}
-                deaths.push(
-                    {
-                        x: line["Dates / التواريخ"],
-                        y: line["Deaths / الوفيات"]
-                    });
+                for(var j = 0; j < diff; j++)
+                {
+                    var tmp = date.add(Math.min(j,1), 'days').format("DD/MM/YYYY"); //add missing dates by adding one day
+                    dates.push(tmp);
+                    //fill 'active_cases' array with objects {x:date,y:number of active cases}
+                    active_cases.push(
+                        {
+                            x: tmp,
+                            y: line["Cases / الحالات"]
+                        });
+                    
+                    //fill 'deaths' array with objects {x:date,y:number of deaths}
+                    deaths.push(
+                        {
+                            x: tmp,
+                            y: line["Deaths / الوفيات"]
+                        }
+                        );
 
-                //fill 'recoveries' array with objects {x:date,y:number of recoveries}
-                recoveries.push(
-                    {
-                        x: line["Dates / التواريخ"],
-                        y: line["Recovered / تعافى"]
-                    });
-            });
-
-            //select canvas by id
+                    //fill 'recoveries' array with objects {x:date,y:number of recoveries}
+                    recoveries.push(
+                        {
+                            x: tmp,
+                            y: line["Recovered / تعافى"]
+                        }); 
+                }
+            }
+            console.log(active_cases);
+            //init graph ...
             var ctx = document.getElementById('time');
-            //init chart
+
             var chart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: [ // Date Objects
-					newDate(0),
-					newDate(1),
-					newDate(2),
-					newDate(3),
-					newDate(4),
-					newDate(5),
-					newDate(6)
-				],
-				datasets: [{
-					label: 'My First dataset',
-					backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-					borderColor: window.chartColors.red,
-					fill: false,
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-				}, {
-					label: 'My Second dataset',
-					backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-					borderColor: window.chartColors.blue,
-					fill: false,
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-				}, {
-					label: 'Dataset with point data',
-					backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-					borderColor: window.chartColors.green,
-					fill: false,
-					data: [{
-						x: newDateString(0),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(5),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(7),
-						y: randomScalingFactor()
-					}, {
-						x: newDateString(15),
-						y: randomScalingFactor()
-					}],
-				}]
-			},
-			options: {
-				title: {
-					text: 'Chart.js Time Scale'
-				},
-				scales: {
-					xAxes: [{
-						type: 'time',
-						time: {
-							parser: timeFormat,
-							// round: 'day'
-							tooltipFormat: 'll HH:mm'
-						},
-						scaleLabel: {
-							display: true,
-							labelString: 'Date'
-						}
-					}],
-					yAxes: [{
-						scaleLabel: {
-							display: true,
-							labelString: 'value'
-						}
-					}]
-				},
-			}
+                type: 'line',
+                data: {
+                    labels: dates, // Dates
+                    datasets: [
+                        {
+                            label: 'Number of active cases',
+                            data: active_cases,
+                            backgroundColor: 'rgba(255,0,0,.5)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Total recoveries',
+                            data: recoveries,
+                            backgroundColor: 'rgba(0,255,0,.5)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Total deaths',
+                            data: deaths,
+                            backgroundColor: 'rgba(50,0,0,.5)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false,
+                    hover: {
+                        mode: 'nearest',
+                        intersect: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                        }],
+                        yAxes: [{
+                            display: true,
+                        }]
+                    }
+                }
+            });
 		});
     </script>
 
@@ -304,4 +274,3 @@
     </script>
 </body>
 </html>
-
