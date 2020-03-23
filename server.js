@@ -1,8 +1,11 @@
 var csv = require("csvtojson");
 var shell = require('shelljs');
 var express = require('express');
+var cors = require('cors');
+
 var app = express();
 
+app.use(cors());
 app.use(express.static('public'));
 app.use('/',express.static(__dirname + '/frontend'));
 
@@ -53,6 +56,6 @@ app.get('/api/time',function(req,res){
 
 app.listen(3000,function(){
     update_data();
-    setInterval(update_data, 1000 * 30);
+    setInterval(update_data, 1000 * 60 * 5); // 5 minutes
     console.log('Listening on port 3000');
 })
