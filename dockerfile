@@ -6,4 +6,7 @@ COPY setup.sh /corona/setup.sh
 WORKDIR /corona/
 run npm install
 
+COPY index.html /corona
+COPY style.css /corona
+
 ENTRYPOINT ["bash","setup.sh"]
