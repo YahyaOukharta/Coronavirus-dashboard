@@ -7,7 +7,8 @@ var app = express();
 
 app.use(cors());
 app.use(express.static('public'));
-app.use('/',express.static(__dirname + '/frontend'));
+//app.use('/',express.static(__dirname + '/frontend'));
+app.use('/',express.static(__dirname + '/frontend/mdb'));
 
 // app.get('/',function(req,res){
 //     res.send("Hello");
