@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Dashboard</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
   <!-- MDB icon -->
   <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
   <!-- Font Awesome -->
@@ -35,9 +39,9 @@
             <li class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" id="navdropdownbtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Graphs</a>
               <div class="dropdown-menu dropdown-primary" aria-labelledby="navdropdownbtn">
-                <a href="#" class="dropdown-item dropdown-primary">Regions</a>
-                <a href="#" class="dropdown-item dropdown-primary">Cities</a>
-                <a href="#" class="dropdown-item dropdown-primary">Time series</a>
+                <a href="#regions" class="dropdown-item dropdown-primary">Regions</a>
+                <a href="#cities" class="dropdown-item dropdown-primary">Cities</a>
+                <a href="#time" class="dropdown-item dropdown-primary">Time series</a>
               </div>
             </li>
             <li class="nav-item">
@@ -52,112 +56,64 @@
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container ">
     <div class="row pt-4">
       <div class="col-lg-6 col-md-12 py-4">
         <div class="card ">
-          <div class="view overlay mt-4">
-            <!-- <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top"> -->
-            <canvas id="regions" width="800" height="400" class="card-img-top"></canvas>
-
-          </div>
-          
           <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
+            <h3 class="card-title">Statistics by time</h4>
+            <div class="view overlay my-2">
+              <canvas id="time" height="400px" class="card-img-top"></canvas>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-lg-6 col-md-12 py-4">
         <div class="card ">
-          <div class="view overlay">
-            <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-          
           <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 py-4">
-        <div class="card ">
-          <div class="view overlay">
-            <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-          
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 py-4">
-        <div class="card ">
-          <div class="view overlay">
-            <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-          
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 py-4">
-        <div class="card">
-          <div class="view overlay">
-            <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-          
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-12 py-4">
-        <div class="card ">
-          <div class="view overlay">
-            <img src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="" class="card-img-top">
-            <a href="#!">
-              <div class="mask rgba-white-slight"></div>
-            </a>
-          </div>
-          
-          <div class="card-body">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis molestias quae sunt. Praesentium iure ratione excepturi sed sit rem rerum ipsa nemo repellat? Asperiores ut, numquam officiis consequuntur autem ab?</p>
-            <a href="#" class="btn btn-primary">Button</a>
+            <h3 class="card-title ">Geographics representation</h4>
+            <div id="mapid" style="height : 490px; "></div>
           </div>
         </div>
       </div>
     </div>
-
+    <div class="row pt-4">
+      <div class="col-lg-12 col-md-12 py-2 mx-2">
+        <div class="card ">
+          <div class="card-body">
+            <h2 class="card-title ml-5">Statistics by regions</h4>
+            <div class="view overlay pt-3 mr-5">
+              <canvas id="regions" class="card-img-top"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-4">
+      <div class="col-lg-12 col-md-12 py-2 mx-2">
+        <div class="card ">
+          <div class="card-body">
+            <h3 class="card-title">Statistics by cities (latest data)</h4>
+            <div class="view overlay ">
+              <canvas id="cities"class="card-img-top"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- footer -->
   <footer></footer>
 <!-- Footer -->
+  <!-- leaflet js -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin=""></script>
   <!-- chartjs -->
   <script type="text/javascript" src="js/Chart.min.js"></script>
+  <!-- chartjs -->
+  <script type="text/javascript" src="js/moment.js"></script>
     <!-- jQuery -->
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <!-- Bootstrap tooltips -->
@@ -166,85 +122,10 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="js/mdb.min.js"></script>
-  
-  <!-- Your custom scripts (optional) -->
 
+  <script src="init_graphs.js"></script>
   <script>
-    //fetch data from local api
-    $.getJSON('http://localhost:3000/api/regions',function(data){
-
-        let jsondata = data;
-        let labels = []; //for labels // x axis
-        let active_cases = []; //for datapoints // y axis
-        let recoveries = []; //for datapoints // y axis
-        let deaths = []; //for datapoints // y axis
-        
-        //sort data by number of active cases 
-        var sorted = jsondata.slice(0);
-        sorted.sort(function(a,b) {
-            return Number(b["Active Cases / الحالات النشطة"]) - Number(a["Active Cases / الحالات النشطة"]);
-        });
-        jsondata = sorted;
-
-        //fill 'labels' array with all region names
-        jsondata.forEach(line => {
-            labels.push(line["Region / الجهة"]);
-        });
-        //fill 'active_cases' array with number of active cases per region
-        jsondata.forEach(line => {
-            active_cases.push(line["Active Cases / الحالات النشطة"]);
-        });
-        //fill 'deaths' array with number of deaths per region
-        jsondata.forEach(line => {
-            deaths.push(line["Total Deaths / إجمالي الوفيات"]);
-        });
-        //fill 'recoveries' array with number of recoveries per region
-        jsondata.forEach(line => {
-            recoveries.push(line["Total Recovered / إجمالي المعافين"]);
-        });
-
-        //select canvas by id
-        var ctx = document.getElementById('regions');
-        //init chart
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels, // Regions names
-                datasets: [
-                    {
-                        label: 'Number of active cases',
-                        data: active_cases,
-                        backgroundColor: 'rgba(255,0,0,.5)',
-                        borderWidth: 2
-                    },
-                    {
-                        label: 'Total recoveries',
-                        data: recoveries,
-                        backgroundColor: 'rgba(0,255,0,.5)',
-                        borderWidth: 2
-                    },
-                    {
-                        label: 'Total deaths',
-                        data: deaths,
-                        backgroundColor: 'rgba(50,0,0,.5)',
-                        borderWidth: 2
-                    }
-                ]
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    });
-</script>
-
-
+    init_everything();
+  </script>
 </body>
 </html>

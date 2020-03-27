@@ -8,8 +8,8 @@ var app = express();
 
 app.use(cors());
 app.use(express.static('public'));
-app.use('/',express.static(__dirname + '/frontend'));
-//app.use('/',express.static(__dirname + '/frontend/mdb'));
+//app.use('/',express.static(__dirname + '/frontend'));
+app.use('/',express.static(__dirname + '/frontend/mdb'));
 
 // app.get('/',function(req,res){
 //     res.send("Hello");
@@ -67,7 +67,7 @@ app.get('/api/time',function(req,res){
 });
 
 app.listen(3000,function(){
-    //update_data();
-    //setInterval(update_data, 1000 * 60 * 5); // 5 minutes
+    update_data();
+    setInterval(update_data, 1000 * 60 * 5); // 5 minutes
     console.log('Listening on port 3000');
 })
